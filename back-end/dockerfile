@@ -1,13 +1,34 @@
 FROM node:20.11.0
 
+# Definir diretório de trabalho
 WORKDIR /app
 
+# Configurar cache do npm
+RUN npm config set cache /app/.npm-cache --global
+
+# Adicionar grupo e usuário com diretório home
+RUN addgroup --system appgroup && adduser --system --home /appuser --ingroup appgroup appuser
+
+# Alterar permissões do diretório de trabalho antes de copiar arquivos
+RUN mkdir -p /app && chown -R appuser:appgroup /app
+
+# Copiar arquivos do projeto
 COPY package*.json ./
 
+# Ajustar permissões dos arquivos copiados
+RUN chown -R appuser:appgroup /app
+
+# Alterar para o usuário não-root
+USER appuser
+
+# Instalar dependências
 RUN npm install
 
+# Copiar restante do código do projeto
 COPY . .
 
-EXPOSE 8080
+# Expor a porta
+EXPOSE 4000
 
+# Comando para iniciar a aplicação
 CMD [ "npm", "start" ]
