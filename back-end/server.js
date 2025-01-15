@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000", // Endereço do front-end (ajuste conforme necessário)
+    origin: "https://dojo-near-x-bitcoin.vercel.app", // Endereço do front-end (ajuste conforme necessário)
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
