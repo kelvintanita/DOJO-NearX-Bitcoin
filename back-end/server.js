@@ -16,7 +16,7 @@ const client = new Client({
   network: "testnet",
   username: "polaruser",
   password: "polarpass",
-  host: "54.211.151.85",
+  host: "35.232.240.83",
   port: 18443,
 });
 
