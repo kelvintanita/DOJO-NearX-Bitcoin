@@ -1,0 +1,10 @@
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/libbitcoin_rpc_json-eb4b2c87aa8b6626.rmeta: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/blockchain.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/mining.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/net.rs
+
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/libbitcoin_rpc_json-eb4b2c87aa8b6626.rlib: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/blockchain.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/mining.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/net.rs
+
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/bitcoin_rpc_json-eb4b2c87aa8b6626.d: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/blockchain.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/mining.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/net.rs
+
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/lib.rs:
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/blockchain.rs:
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/mining.rs:
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bitcoin-rpc-json-0.2.0/src/net.rs:

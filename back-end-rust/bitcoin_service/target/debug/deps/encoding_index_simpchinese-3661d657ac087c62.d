@@ -1,0 +1,9 @@
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/libencoding_index_simpchinese-3661d657ac087c62.rmeta: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030_ranges.rs
+
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/libencoding_index_simpchinese-3661d657ac087c62.rlib: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030_ranges.rs
+
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/encoding_index_simpchinese-3661d657ac087c62.d: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030_ranges.rs
+
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/lib.rs:
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030.rs:
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-simpchinese-1.20141219.5/gb18030_ranges.rs:

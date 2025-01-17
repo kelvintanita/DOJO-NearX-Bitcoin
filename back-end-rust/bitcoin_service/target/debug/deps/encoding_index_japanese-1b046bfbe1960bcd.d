@@ -1,0 +1,9 @@
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/libencoding_index_japanese-1b046bfbe1960bcd.rmeta: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0208.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0212.rs
+
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/libencoding_index_japanese-1b046bfbe1960bcd.rlib: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0208.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0212.rs
+
+/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/deps/encoding_index_japanese-1b046bfbe1960bcd.d: /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/lib.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0208.rs /home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0212.rs
+
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/lib.rs:
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0208.rs:
+/home/kelvintanita/.cargo/registry/src/index.crates.io-6f17d22bba15001f/encoding-index-japanese-1.20141219.5/jis0212.rs:
