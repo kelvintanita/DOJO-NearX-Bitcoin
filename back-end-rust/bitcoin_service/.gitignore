@@ -1,0 +1,41 @@
+# Compilação do Cargo
+/target/
+
+# Arquivos gerados pelo Cargo
+**/*.rs.bk
+**/*.rs.swp
+Cargo.lock
+
+# Arquivos de debug
+*.log
+
+# Arquivos temporários do editor
+*.swp
+*.swo
+*.bak
+*.tmp
+*.old
+*.orig
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# IDEs e Ferramentas
+# IntelliJ IDEA / CLion
+.idea/
+*.iml
+out/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Outros
+/.env
