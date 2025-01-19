@@ -1,106 +1,93 @@
-use warp::Filter;
-use bitcoin-rpc::{Auth, Client};
-use serde::{Deserialize, Serialize};
+use actix_web::{web, App, HttpServer, Responder, HttpResponse};
+use serde::Deserialize;
+use dotenv::dotenv;
 use std::env;
+use reqwest::{Client};
+use log::info;
+use serde_json::{json, Value};
 
-#[tokio::main]
-async fn main() {
-    dotenv::dotenv().ok();
-
-    // Configuração do cliente RPC
-    let rpc_client = Client::new(
-        env::var("BITCOIN_RPC_URL").expect("BITCOIN_RPC_URL not set"),
-        Auth::UserPass(
-            env::var("BITCOIN_RPC_USER").expect("BITCOIN_RPC_USER not set"),
-            env::var("BITCOIN_RPC_PASS").expect("BITCOIN_RPC_PASS not set"),
-        ),
-    )
-    .unwrap();
-
-    let client_filter = warp::any().map(move || rpc_client.clone());
-
-    // Endpoints
-    let get_block = warp::path!("block" / u64)
-        .and(client_filter.clone())
-        .and_then(get_block_handler);
-
-    let get_transaction = warp::path!("transaction" / String)
-        .and(client_filter.clone())
-        .and_then(get_transaction_handler);
-
-    let routes = warp::get().and(get_block.or(get_transaction));
-
-    println!("Server is running on port 8080");
-    warp::serve(routes).run(([0, 0, 0, 0], 8080)).await;
+#[derive(Deserialize)]
+pub struct BlockRequest {
+    block_number: u64,
 }
 
-// Handlers
-async fn get_block_handler(block_number: u64, client: Client) -> Result<impl warp::Reply, warp::Rejection> {
-    match client.call::<String>("getblockhash", &[block_number.into()]) {
-        Ok(block_hash) => match client.call::<serde_json::Value>("getblock", &[block_hash.into()]) {
-            Ok(block) => Ok(warp::reply::json(&block)),
-            Err(e) => Err(warp::reject::custom(e)),
-        },
-        Err(e) => Err(warp::reject::custom(e)),
-    }
+pub async fn get_block(
+    info: web::Path<BlockRequest>,
+    client: web::Data<Client>,
+) -> impl Responder {
+    // Leitura do host e porta para a conexão RPC
+    let host = match env::var("HOST") {
+        Ok(h) => h,
+        Err(_) => return HttpResponse::InternalServerError().body("HOST environment variable not set"),
+    };
+
+    // Leitura da porta para a conexão RPC
+    let port = match env::var("PORT") {
+        Ok(port) => port,
+        Err(_) => return HttpResponse::InternalServerError().body("PORT environment variable not set"),
+    };
+
+    // Leitura do usuário e senha para autenticação
+    let rpc_user = match env::var("BITCOIN_RPC_USER") {
+        Ok(user) => user,
+        Err(_) => return HttpResponse::InternalServerError().body("BITCOIN_RPC_USER environment variable not set"),
+    };
+    let rpc_password = match env::var("BITCOIN_RPC_PASS") {
+        Ok(password) => password,
+        Err(_) => return HttpResponse::InternalServerError().body("BITCOIN_RPC_PASS environment variable not set"),
+    };
+    // Montagem da URL para a chamada RPC
+    let rpc_url = format!("http://{}:{}/", host, port);
+
+    // Montagem do payload JSON para a chamada RPC
+    let payload = json!({
+        "jsonrpc": "1.0",
+        "id": "postman",
+        "method": "getblockhash",
+        "params": [info.block_number]
+    });
+
+    // Envio da requisição POST com autenticação básica
+    let response = match client.post(&rpc_url)
+        .json(&payload)
+        .basic_auth(rpc_user, Some(rpc_password))  
+        .send()
+        .await
+    {
+        Ok(res) => res,
+        Err(err) => {
+            eprintln!("Request error: {}", err);
+            return HttpResponse::InternalServerError().body("Failed to send request");
+        }
+    };
+
+    // Parse da resposta como JSON
+    let response_json: Value = match response.json().await {
+        Ok(json) => json,
+        Err(err) => {
+            eprintln!("Failed to parse JSON: {}", err);
+            return HttpResponse::InternalServerError().body("Invalid response from RPC server");
+        }
+    };
+
+    // Retorna a resposta como JSON
+    HttpResponse::Ok().json(response_json)
 }
 
-async fn get_transaction_handler(txid: String, client: Client) -> Result<impl warp::Reply, warp::Rejection> {
-    match client.call::<serde_json::Value>("gettransaction", &[txid.into()]) {
-        Ok(transaction) => Ok(warp::reply::json(&transaction)),
-        Err(e) => Err(warp::reject::custom(e)),
-    }
-}
-use warp::Filter;
-use bitcoin_rpc::{Auth, Client};
-use serde::{Deserialize, Serialize};
-use std::env;
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    env_logger::init();
+    info!("Servidor iniciado na porta 3000");
+    dotenv().ok();
 
-#[tokio::main]
-async fn main() {
-    dotenv::dotenv().ok();
+    let client = Client::new();
 
-    // Configuração do cliente RPC
-    let rpc_client = Client::new(
-        env::var("BITCOIN_RPC_URL").expect("BITCOIN_RPC_URL not set"),
-        Auth::UserPass(
-            env::var("BITCOIN_RPC_USER").expect("BITCOIN_RPC_USER not set"),
-            env::var("BITCOIN_RPC_PASS").expect("BITCOIN_RPC_PASS not set"),
-        ),
-    )
-    .unwrap();
-
-    let client_filter = warp::any().map(move || rpc_client.clone());
-
-    // Endpoints
-    let get_block = warp::path!("block" / u64)
-        .and(client_filter.clone())
-        .and_then(get_block_handler);
-
-    let get_transaction = warp::path!("transaction" / String)
-        .and(client_filter.clone())
-        .and_then(get_transaction_handler);
-
-    let routes = warp::get().and(get_block.or(get_transaction));
-
-    println!("Server is running on port 8080");
-    warp::serve(routes).run(([0, 0, 0, 0], 8080)).await;
-}
-
-// Handlers
-async fn get_block_handler(block_number: u64, client: Client) -> Result<impl warp::Reply, warp::Rejection> {
-    match client.call::<String>("getblockhash", &[block_number.into()]) {
-        Ok(block_hash) => match client.call::<serde_json::Value>("getblock", &[block_hash.into()]) {
-            Ok(block) => Ok(warp::reply::json(&block)),
-            Err(e) => Err(warp::reject::custom(e)),
-        },
-        Err(e) => Err(warp::reject::custom(e)),
-    }
-}
-
-async fn get_transaction_handler(txid: String, client: Client) -> Result<impl warp::Reply, warp::Rejection> {
-    match client.call::<serde_json::Value>("gettransaction", &[txid.into()]) {
-        Ok(transaction) => Ok(warp::reply::json(&transaction)),
-        Err(e) => Err(warp::reject::custom(e)),
-    }
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(client.clone()))
+            .route("/block/{block_number}", web::get().to(get_block))
+    })
+    .bind(("127.0.0.1", 3000))?
+    .run()
+    .await
 }

@@ -1,1 +1,0 @@
-cargo:rustc-env=MIME_TYPES_GENERATED_PATH=/mnt/c/estudo/nearX/DOJO-NearX-Bitcoin/back-end-rust/bitcoin_service/target/debug/build/mime_guess-9ab8f428202dae05/out/mime_types_generated.rs
