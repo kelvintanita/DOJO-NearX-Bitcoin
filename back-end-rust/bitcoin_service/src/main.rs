@@ -1,19 +1,20 @@
 // 1. Crates Externos
 use actix_web::{web, App, HttpServer};
-use dotenv::dotenv;
 use log::info;
 use reqwest::Client;
+use dotenv::dotenv;
 
 // 2. Módulos Internos
 mod models;
 mod services;
+mod config; 
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init();
-    info!("Servidor iniciado na porta 3000");
-    dotenv().ok();
-
+    info!("========= Servidor iniciado na porta 3000 =========");
+    dotenv().ok(); 
+    
     let client = Client::new();
 
     HttpServer::new(move || {

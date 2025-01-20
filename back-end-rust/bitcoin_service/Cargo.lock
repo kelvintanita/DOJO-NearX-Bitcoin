@@ -279,6 +279,7 @@ dependencies = [
  "env_logger",
  "ferris-says",
  "log",
+ "once_cell",
  "reqwest",
  "serde",
  "serde_json",
