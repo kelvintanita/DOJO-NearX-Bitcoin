@@ -470,8 +470,8 @@ pub async fn add_funds(
     }
 
     let rpc_url = &*RPC_URL;
-    let rpc_user = &*RPC_USER; 
-    let rpc_password = &*RPC_PASSWORD; 
+    let rpc_user = &*RPC_USER;
+    let rpc_password = &*RPC_PASSWORD;
 
     let auth = reqwest::header::HeaderValue::from_str(&format!(
         "Basic {}",
@@ -529,9 +529,10 @@ pub async fn get_wallet(
         "Basic {}",
         base64::encode(format!("{}:{}", rpc_user, rpc_password))
     ))
-    .map_err(|_| HeaderValue::from_static("")).unwrap_or_else(|e| {
-        eprintln!("Failed to create header value: {:?}", e);
-        HeaderValue::from_static("")
+    .map_err(|_| HttpResponse::InternalServerError().body("Failed to create authorization header"))
+    .unwrap_or_else(|err| {
+        eprintln!("Invalid header: {:?}", err);
+        return HeaderValue::from_static("");
     });
 
     let client = client.get_ref();
