@@ -3,6 +3,7 @@ use crate::models::add_funds::AddFundsRequest;
 use crate::models::block::BlockRequest;
 use crate::models::send::SendBitcoinRequest;
 use crate::models::transaction::Transaction;
+use crate::models::wallet_response::WalletResponse;
 use actix_web::{web, HttpResponse, Responder};
 use base64;
 use reqwest::header::HeaderValue;
@@ -10,6 +11,17 @@ use reqwest::Client;
 use serde_json::{json, Value};
 use std::collections::HashMap;
 
+#[utoipa::path(
+    get,
+    path = "/block/{block_number}",
+    params(
+        BlockRequest
+    ),
+    responses(
+        (status = 200, description = "Informações do bloco retornadas com sucesso"),
+        (status = 500, description = "Erro interno")
+    )
+)]
 pub async fn get_block(info: web::Path<BlockRequest>, client: web::Data<Client>) -> impl Responder {
     // Montagem do payload JSON para a chamada RPC
     let payload = json!({
@@ -47,6 +59,17 @@ pub async fn get_block(info: web::Path<BlockRequest>, client: web::Data<Client>)
     HttpResponse::Ok().json(response_json)
 }
 
+#[utoipa::path(
+    get,
+    path = "/transaction/{txid}",
+    params(
+        ("txid" = String, Path, description = "ID da transação")
+    ),
+    responses(
+        (status = 200, description = "Detalhes da transação retornados com sucesso"),
+        (status = 404, description = "Transação não encontrada")
+    )
+)]
 pub async fn get_transaction(info: web::Path<String>, client: web::Data<Client>) -> impl Responder {
     let txid = info.into_inner();
 
@@ -82,6 +105,14 @@ pub async fn get_transaction(info: web::Path<String>, client: web::Data<Client>)
     HttpResponse::Ok().json(response_json)
 }
 
+#[utoipa::path(
+    get,
+    path = "/node/status",
+    responses(
+        (status = 200, description = "Status do nó retornado com sucesso"),
+        (status = 500, description = "Erro interno")
+    )
+)]
 pub async fn get_node_status(client: web::Data<Client>) -> impl Responder {
     let blockchain_info = json!({
         "jsonrpc": "1.0",
@@ -125,6 +156,19 @@ pub async fn get_node_status(client: web::Data<Client>) -> impl Responder {
     }
 }
 
+#[utoipa::path(
+    post,
+    path = "/wallet/create",
+    request_body(
+        content = serde_json::Value,
+        description = "Rótulo da carteira",
+        content_type = "application/json"
+    ),
+    responses(
+        (status = 200, description = "Carteira criada com sucesso"),
+        (status = 500, description = "Erro ao criar carteira")
+    )
+)]
 pub async fn create_wallet(
     req_body: web::Json<serde_json::Value>,
     client: web::Data<Client>,
@@ -157,6 +201,19 @@ pub async fn create_wallet(
     }
 }
 
+#[utoipa::path(
+    post,
+    path = "/mine/blocks",
+    request_body(
+        content = AddFundsRequest,
+        description = "Endereço e número de blocos para minerar",
+        content_type = "application/json"
+    ),
+    responses(
+        (status = 200, description = "Blocos minerados com sucesso"),
+        (status = 500, description = "Erro ao minerar blocos")
+    )
+)]
 pub async fn mine_blocks(
     req_body: web::Json<serde_json::Value>,
     client: web::Data<Client>,
@@ -208,6 +265,14 @@ pub async fn mine_blocks(
     HttpResponse::InternalServerError().body("Failed to mine blocks")
 }
 
+#[utoipa::path(
+    get,
+    path = "/wallets",
+    responses(
+        (status = 200, description = "Lista de carteiras retornada com sucesso"),
+        (status = 500, description = "Erro ao listar carteiras")
+    )
+)]
 pub async fn list_wallets(client: web::Data<Client>) -> impl Responder {
     // Requisição para obter os labels (carteiras)
     let payload_labels = json!({
@@ -307,6 +372,20 @@ pub async fn list_wallets(client: web::Data<Client>) -> impl Responder {
     HttpResponse::Ok().json(result)
 }
 
+#[utoipa::path(
+    post,
+    path = "/send",
+    request_body(
+        content = SendBitcoinRequest,
+        description = "Dados para envio de Bitcoins",
+        content_type = "application/json"
+    ),
+    responses(
+        (status = 200, description = "Transação criada com sucesso"),
+        (status = 400, description = "Fundos insuficientes"),
+        (status = 500, description = "Erro ao enviar Bitcoins")
+    )
+)]
 pub async fn send_bitcoins(
     client: web::Data<reqwest::Client>,
     payload: web::Json<SendBitcoinRequest>,
@@ -456,6 +535,20 @@ pub async fn send_bitcoins(
     HttpResponse::Ok().json(json!({ "txId": tx_id }))
 }
 
+#[utoipa::path(
+    post,
+    path = "/funds/add",
+    request_body(
+        content = AddFundsRequest,
+        description = "Endereço e número de blocos para adicionar fundos",
+        content_type = "application/json"
+    ),
+    responses(
+        (status = 200, description = "Fundos adicionados com sucesso"),
+        (status = 400, description = "Parâmetros inválidos"),
+        (status = 500, description = "Erro ao adicionar fundos")
+    )
+)]
 pub async fn add_funds(
     client: web::Data<reqwest::Client>,
     payload: web::Json<AddFundsRequest>,
@@ -509,6 +602,19 @@ pub async fn add_funds(
     }
 }
 
+
+#[utoipa::path(
+    get,
+    path = "/wallet/{address}",
+    params(
+        ("address" = String, Path, description = "Endereço da carteira")
+    ),
+    responses(
+        (status = 200, description = "Informações da carteira retornadas com sucesso", body = WalletResponse),
+        (status = 400, description = "Endereço da carteira não fornecido"),
+        (status = 500, description = "Erro ao processar as informações da carteira")
+    )
+)]
 pub async fn get_wallet(
     client: web::Data<reqwest::Client>,
     path: web::Path<String>,

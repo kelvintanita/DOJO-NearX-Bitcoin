@@ -1,7 +1,9 @@
+use utoipa::ToSchema;
 use serde::Serialize;
-#[derive(Serialize)]
+
+#[derive(Serialize, ToSchema)]
 pub struct Transaction {
-    pub(crate) txid: String,
-    pub(crate) amount: f64,
-    pub(crate) confirmations: u64,
+    pub txid: String,
+    pub amount: f64,
+    pub confirmations: u64,
 }
